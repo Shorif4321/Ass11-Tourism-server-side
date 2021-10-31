@@ -69,6 +69,21 @@ async function run() {
             res.send(orders)
         })
 
+        //UPDATE STATUS
+        app.put('/status/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateStatus = req.body;
+            console.log(updateStatus)
+            const filter = { _id: ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    status: updateStatus.status,
+                },
+            };
+            const result = await orderCollection.updateOne(filter, updateDoc);
+            res.json(result)
+        })
+
         //Delete TO MANAGE
         app.delete('/manage/:id', async (req, res) => {
             const id = req.params.id;
@@ -77,12 +92,6 @@ async function run() {
             const result = await orderCollection.deleteOne(query)
             res.json(result)
         })
-
-
-
-
-
-
 
     } finally {
         //await client.close();
