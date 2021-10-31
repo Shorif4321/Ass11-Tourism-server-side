@@ -22,18 +22,24 @@ async function run() {
 
         const databaseOrder = client.db("order");
         const orderCollection = databaseOrder.collection("orderList");
+
+
         //POST API
         app.post('/services', async (req, res) => {
             const service = req.body;
             const result = await serviceCollection.insertOne(service)
             res.json(result)
         })
+
+
         //GET API
         app.get('/services', async (req, res) => {
             const cursor = serviceCollection.find({})
             const service = await cursor.toArray();
             res.send(service)
         })
+
+
         //GET SINGLE API
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
@@ -41,6 +47,8 @@ async function run() {
             const service = await serviceCollection.findOne(query);
             res.json(service)
         })
+
+
         //ORDER POST API
         app.post('/order', async (req, res) => {
             const newOder = req.body;
@@ -62,6 +70,7 @@ async function run() {
             res.json(result)
         })
 
+
         // GET API FOR MANAGE
         app.get('/manage', async (req, res) => {
             const cursor = orderCollection.find({})
@@ -69,11 +78,11 @@ async function run() {
             res.send(orders)
         })
 
+
         //UPDATE STATUS
         app.put('/status/:id', async (req, res) => {
             const id = req.params.id;
             const updateStatus = req.body;
-            console.log(updateStatus)
             const filter = { _id: ObjectId(id) }
             const updateDoc = {
                 $set: {
@@ -84,10 +93,10 @@ async function run() {
             res.json(result)
         })
 
+
         //Delete TO MANAGE
         app.delete('/manage/:id', async (req, res) => {
             const id = req.params.id;
-            console.log('get the delete id', id)
             const query = { _id: ObjectId(id) }
             const result = await orderCollection.deleteOne(query)
             res.json(result)
@@ -101,7 +110,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Tour website running')
+    res.send('TourTogether website running')
 })
 
 app.listen(port, () => {
