@@ -24,7 +24,7 @@ async function run() {
         const orderCollection = databaseOrder.collection("orderList");
 
 
-        //POST API
+        //POST API SERVICE
         app.post('/services', async (req, res) => {
             const service = req.body;
             const result = await serviceCollection.insertOne(service)
